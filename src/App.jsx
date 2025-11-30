@@ -7,14 +7,30 @@ import { Button, Box, Typography } from "@mui/material";
 
 import ProgressBox from './components/ProgressBox/ProgressBox.jsx';
 
+import { createTheme } from "@mui/material/styles"; 
+import { ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "rgb(55, 29, 12)",
+    },
+    secondary: {
+      main: "rgb(155,64,28)",
+    },
+  },
+});
+
 export default function App() {
   const count = useSelector(state => state.counter.value);
   const dispatch = useDispatch();
 
   return (
-    <Box sx={{ p: 4 }}>
-      <ProgressBox />
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Box sx={{}}>
+        <ProgressBox />
+      </Box>
+    </ThemeProvider>
   );
 }
 

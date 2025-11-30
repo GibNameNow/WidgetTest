@@ -1,8 +1,67 @@
 import React from "react";
 // import { Box } from "@mui/system";
 import { Box, Typography } from "@mui/material";
+import Button from '@mui/material/Button';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRightRounded';
 
-const ProgressRow = ({ label, barFraction, barColor }) => {
+
+// ProgressRow list data
+const progressRows = [
+    {
+        label: "Full Width Bar",
+        barFraction: 1,
+        barColor: "secondary.main",
+        valueText: "15k",
+    },
+    {
+        label: "Half Width Bar",
+        barFraction: 0.5,
+        barColor: "secondary.main",
+        valueText: "7.5k",
+    },
+    {
+        label: "Quarter Width",
+        barFraction: 0.25,
+        barColor: "secondary.main",
+        valueText: "3.75k",
+    },
+    {
+        label: "Quarter Width",
+        barFraction: 0.25,
+        barColor: "secondary.main",
+        valueText: "3.75k",
+    },
+    {
+        label: "Quarter Width",
+        barFraction: 0.25,
+        barColor: "secondary.main",
+        valueText: "3.75k",
+    },
+];
+
+
+
+function RadioArrowIcon(props) {
+  return (
+    <Box sx={{ position: "relative", width: 24, height: 24 }}>
+      <RadioButtonUncheckedIcon sx={{ fontSize: 24,color: "rgb(224,240,252)",}} />
+      
+      <KeyboardArrowRightRoundedIcon
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%) scale(0.9)",
+          color: "rgb(224,240,252)",
+        }}
+      />
+    </Box>
+  );
+}
+
+const ProgressRow = ({ label, barFraction, barColor, valueText }) => {
+
   return (
     <Box
       sx={{
@@ -18,7 +77,7 @@ const ProgressRow = ({ label, barFraction, barColor }) => {
         <Typography
           sx={{
             fontWeight: 500,
-            color: "text.primary",
+            color: "rgb(224,240,252)",
             fontSize: "1rem",
             lineHeight: 1.2,
           }}
@@ -35,11 +94,28 @@ const ProgressRow = ({ label, barFraction, barColor }) => {
             border: "3px solid",
             borderColor: barColor,
             borderRadius: 1.5,
-            height: 16,
-            backgroundColor: `${barColor}33`, // slight tint
+            minHeight: 20,
+            backgroundColor: barColor,
             transition: "width 0.3s ease",
+            paddingRight: "0.2rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
           }}
-        />
+        >
+            
+        <Typography
+          sx={{
+            fontWeight: 500,
+            color: "rgb(224,240,252)",
+            fontSize: "0.875rem",
+            lineHeight: 1.2,
+            textAlign: "right",
+          }}
+        >
+          {valueText}
+        </Typography>
+        </Box>
       </Box>
     </Box>
   );
@@ -47,48 +123,55 @@ const ProgressRow = ({ label, barFraction, barColor }) => {
 
 const ProgressBox = () => {
   return (
-    <Box
-      sx={{
-        p: 4,
-        borderRadius: 4,
-        border: "5px solid",
-        borderColor: "grey.400",
-        boxShadow: 3,
-        backgroundColor: "background.paper",
-        width: "100%",
-        maxWidth: 420,
-        mx: "auto",
-      }}
-    >
-      {/* Headline */}
-      <Typography
-        variant="h5"
+    <Box sx={{ display: "flex", flexDirection: "column", }}>
+        <Box
         sx={{
-          fontWeight: 700,
-          mb: 4,
-          textAlign: "left",
-          color: "text.primary",
+            p: 4,
+            borderRadius: 4,
+            border: "5px solid",
+            borderColor: "secondary.main",
+            boxShadow: 3,
+            backgroundColor: "primary.main",
+            maxWidth: 420,
         }}
-      >
-        Metrics Overview
-      </Typography>
+        >
+            {/* Headline */}
+            <Typography
+                variant="h5"
+                sx={{
+                fontWeight: 700,
+                mb: 4,
+                textAlign: "left",
+                color: "rgb(224,240,252)",
+                mb: "2rem",
+                }}
+            >
+                Metrics Overview
+            </Typography>
 
-      {/* Rows */}
-      <ProgressRow
-        label="Full Width Bar"
-        barFraction={1}
-        barColor="#1976d2"
-      />
-      <ProgressRow
-        label="Half Width Bar"
-        barFraction={0.5}
-        barColor="#2e7d32"
-      />
-      <ProgressRow
-        label="Quarter Width Bar"
-        barFraction={0.25}
-        barColor="#d32f2f"
-      />
+            {/* Rows */}
+                {progressRows.map((row, index) => (
+                <ProgressRow
+                key={index}
+                label={row.label}
+                barFraction={row.barFraction}
+                barColor={row.barColor}
+                valueText={row.valueText} 
+                />
+            ))}
+            <Box sx={{ display: "flex", justifyContent: "flex-end" , mt: "2rem"}} > 
+                <Button variant="outlined" sx={{borderColor: "secondary.main", backgroundColor: "rgb(87,40,18)"}} endIcon={<RadioArrowIcon />}>
+                <Typography
+                sx={{
+                fontWeight: 300,
+                color: "rgb(224,240,252)",
+                }}
+                >
+                Go to Dashboard
+                </Typography>
+                </Button>
+            </Box>  
+        </Box>
     </Box>
   );
 };
